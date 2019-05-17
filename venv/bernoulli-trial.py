@@ -1,10 +1,13 @@
 import random
 import sys
+import matplotlib.pyplot as plt
 
 
 class Bernoulli:
 
-    def __init__(self, probability_parameter):
+    def __init__(self, probability_parameter, num_of_trials):
+        self.n = num_of_trials
+        self.k_array = list()
         if 0 <= probability_parameter <= 1:
             self.p = probability_parameter
         else:
@@ -19,19 +22,26 @@ class Bernoulli:
         return result  # returns 0 - loss, 1 - success
 
     def geo_generator(self):  # random variable X generator with geometric distribution
-        table_of_success, k_array = list()
-
-        # for i in range(20):
-        #     count = 1
-        #     for j in range(1000):
-        #         tmp = self.trial()
-        #         count += 1
-        #         table_of_success.append(tmp)
-        #         if tmp == 1:
-        #             k_array.append(count)
+        table_of_success = list()
+        for i in range(self.n):
+            k = 1
+            while True:
+                tmp = self.trial()
+                if tmp == 1:
+                    break
+                table_of_success.append(tmp)
+                k += 1
+            self.k_array.append(k)
+            # print("table of success ", table_of_success)
+            # print("karray", k_array)
 
     def histogram(self):  # function that generates histogram of distribution of random X variable
-        pass
+        plt.hist(self.k_array, edgecolor='black', bins=20)
+        plt.title('Histogram liczby porównań')
+        plt.ylabel('Liczba wystąpień danej liczby porównań')
+        plt.xlabel('Liczba porównań')
+        plt.grid(linestyle='--')
+        plt.show()
 
 
 class Testing:
@@ -47,5 +57,6 @@ class Testing:
 
 
 if __name__ == '__main__':
-    obj = Bernoulli(0.5)
+    obj = Bernoulli(0.75, 10000)
     obj.geo_generator()
+    obj.histogram()
