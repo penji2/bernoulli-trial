@@ -1,7 +1,8 @@
 import random
 import sys
 import matplotlib.pyplot as plt
-
+import numpy as np
+import collections
 
 class Bernoulli:
 
@@ -36,10 +37,16 @@ class Bernoulli:
             # print("karray", k_array)
 
     def histogram(self):  # function that generates histogram of distribution of random X variable
-        plt.hist(self.k_array, edgecolor='black', bins=20)
+        #  plt.hist(self.k_array, edgecolor='black')
+        self.k_array.sort()
+        counter = collections.Counter(self.k_array)
+        y_axis_tmp = counter.values()
+        x_axis = [x for x in range(len(y_axis_tmp))]
+        y_axis = [item / self.n for item in y_axis_tmp]
         plt.title('Histogram liczby porównań')
         plt.ylabel('Liczba wystąpień danej liczby porównań')
         plt.xlabel('Liczba porównań')
+        plt.bar(x_axis, y_axis)
         plt.grid(linestyle='--')
         plt.show()
 
