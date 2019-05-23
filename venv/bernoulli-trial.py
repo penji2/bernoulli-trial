@@ -78,18 +78,6 @@ class FirstTest(Bernoulli):
             result = 0
         return result  # returns 0 - loss, 1 - success
 
-    # def first_model(self, elem_amount):
-    #
-    #     probe_list = [i for i in range(1, elem_amount + 1)]
-    #     tmp = 1
-    #     for i in range(self.n):  # loop that coordinates list appending for histogram
-    #         # another for loop here
-    #         for item in probe_list:
-    #             if self.trial(1 / item) == 1:
-    #                 tmp = 1 / item
-    #
-    #         self.k_array.append(tmp)
-
 
 class SecondTest(Bernoulli):
 
@@ -105,17 +93,6 @@ class SecondTest(Bernoulli):
                     tmp = item
 
             self.k_array.append(tmp)
-
-    # def second_model(self, elem_amount):
-    #     probe_list = [i for i in range(1, elem_amount + 1)]
-    #     tmp = 1
-    #     for i in range(self.n):  # loop that coordinates list appending for histogram
-    #         # another for loop here
-    #         for item in probe_list:
-    #             if self.trial() == 1:
-    #                 tmp = item
-    #
-    #         self.k_array.append(tmp)
 
 
 if __name__ == '__main__':
