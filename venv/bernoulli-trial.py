@@ -15,6 +15,11 @@ class Bernoulli:
         else:
             sys.exit("p must be between 0 and 1")
 
+    @staticmethod
+    def set_generator(set_amount):
+        for i in range(1, set_amount + 1):
+            yield i
+
     def trial(self):  # Bernoulli trial function, probability of success = p, loss = 1 - p
         tmp = random.random()
         if tmp <= self.p:
@@ -45,7 +50,7 @@ class Bernoulli:
 
         plt.title(hist_title)
 
-        plt.bar(x_axis, y_axis)
+        plt.bar(x_axis, y_axis, edgecolor='black')
         plt.grid(linestyle='--')
         plt.show()
 
@@ -55,6 +60,16 @@ class FirstTest(Bernoulli):
     def __init__(self, probability_parameter, num_of_trials):
         Bernoulli.__init__(self, probability_parameter, num_of_trials)
 
+    def first_model(self, set_amount):
+        tmp = 1
+        for i in range(self.n):  # loop that coordinates list appending for histogram
+            # another for loop here
+            for item in FirstTest.set_generator(set_amount):
+                if self.trial(1 / item) == 1:
+                    tmp = 1 / item
+
+            self.k_array.append(tmp)
+
     def trial(self, probab):  # Bernoulli trial function, probability of success = p, loss = 1 - p
         tmp = random.random()
         if tmp <= probab:
@@ -63,29 +78,17 @@ class FirstTest(Bernoulli):
             result = 0
         return result  # returns 0 - loss, 1 - success
 
-    def first_model(self, elem_amount):
-
-        probe_list = [i for i in range(1, elem_amount + 1)]
-        tmp = 1
-        for i in range(self.n):  # loop that coordinates list appending for histogram
-            # another for loop here
-            for item in probe_list:
-                if self.trial(1 / item) == 1:
-                    tmp = 1 / item
-
-            self.k_array.append(tmp)
-
-    def histogram(self, hist_title):  # function that generates histogram of distribution of random X variable
-        self.k_array.sort()
-        # counter = collections.Counter(self.k_array)
-        # x_axis = [x for x in range(len(counter.values()))]
-        # y_axis = [item / self.n for item in counter.values()]
-
-        plt.title(hist_title)
-        plt.hist(self.k_array)
-        # plt.bar(x_axis, y_axis)
-        plt.grid(linestyle='--')
-        plt.show()
+    # def first_model(self, elem_amount):
+    #
+    #     probe_list = [i for i in range(1, elem_amount + 1)]
+    #     tmp = 1
+    #     for i in range(self.n):  # loop that coordinates list appending for histogram
+    #         # another for loop here
+    #         for item in probe_list:
+    #             if self.trial(1 / item) == 1:
+    #                 tmp = 1 / item
+    #
+    #         self.k_array.append(tmp)
 
 
 class SecondTest(Bernoulli):
@@ -93,40 +96,41 @@ class SecondTest(Bernoulli):
     def __init__(self, probability_parameter, num_of_trials):
         Bernoulli.__init__(self, probability_parameter, num_of_trials)
 
-    def second_model(self, elem_amount):
-
-        probe_list = [i for i in range(1, elem_amount + 1)]
+    def second_model(self, set_amount):
         tmp = 1
         for i in range(self.n):  # loop that coordinates list appending for histogram
             # another for loop here
-            for item in probe_list:
+            for item in Bernoulli.set_generator(set_amount):
                 if self.trial() == 1:
                     tmp = item
 
             self.k_array.append(tmp)
 
-    def histogram(self, hist_title):  # function that generates histogram of distribution of random X variable
-        self.k_array.sort()
-        # counter = collections.Counter(self.k_array)
-        # x_axis = [x for x in range(len(counter.values()))]
-        # y_axis = [item / self.n for item in counter.values()]
-
-        plt.title(hist_title)
-        plt.hist(self.k_array, bins=self.k_array.sort(), edgecolor='black', density=True, stacked=True)
-        # plt.bar(x_axis, y_axis)
-        plt.grid(linestyle='--')
-        plt.show()
+    # def second_model(self, elem_amount):
+    #     probe_list = [i for i in range(1, elem_amount + 1)]
+    #     tmp = 1
+    #     for i in range(self.n):  # loop that coordinates list appending for histogram
+    #         # another for loop here
+    #         for item in probe_list:
+    #             if self.trial() == 1:
+    #                 tmp = item
+    #
+    #         self.k_array.append(tmp)
 
 
 if __name__ == '__main__':
-    # obj = Bernoulli(0.6, 10000)
+    set_amount = 100
+    number_of_trials = 100000
+    prob = 0.5
+    #
+    # obj = Bernoulli(prob, number_of_trials)
     # obj.geo_generator()
-    # obj.histogram("title")
+    # obj.histogram('Histogram rozkładu zmiennej losowej, {} prob'.format(number_of_trials))
 
-    # first_obj = FirstTest(0.5, 10000)
-    # first_obj.first_model(100)
-    # first_obj.histogram('Histogram rozkładu zmiennej losowej, Sekwencja 100 elementow, 10000 prob')
-
-    second_obj = SecondTest(0.5, 10000)
-    second_obj.second_model(100)
-    second_obj.histogram('Histogram rozkładu zmiennej losowej, Sekwencja 100 elementow, 10000 prob')
+    first_obj = FirstTest(prob, number_of_trials)
+    first_obj.first_model(set_amount)
+    first_obj.histogram('Histogram rozkładu zmiennej losowej, Sekwencja {} elementow, {} prob'.format(set_amount, number_of_trials))
+    #
+    # second_obj = SecondTest(prob, number_of_trials)
+    # second_obj.second_model(set_amount)
+    # second_obj.histogram('Histogram rozkładu zmiennej losowej, Sekwencja {} elementow, {} prob'.format(set_amount, number_of_trials))
