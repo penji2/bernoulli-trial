@@ -98,16 +98,16 @@ class SecondTest(Bernoulli):
 if __name__ == '__main__':
     set_amount = 100
     number_of_trials = 100000
-    prob = 0.5
+    prob = 0.25
     #
     # obj = Bernoulli(prob, number_of_trials)
     # obj.geo_generator()
     # obj.histogram('Histogram rozkładu zmiennej losowej, {} prob'.format(number_of_trials))
 
-    first_obj = FirstTest(prob, number_of_trials)
-    first_obj.first_model(set_amount)
-    first_obj.histogram('Histogram rozkładu zmiennej losowej, Sekwencja {} elementow, {} prob'.format(set_amount, number_of_trials))
+    # first_obj = FirstTest(prob, number_of_trials)
+    # first_obj.first_model(set_amount)
+    # first_obj.histogram('Histogram rozkładu zmiennej losowej, Sekwencja {} elementow, {} prob'.format(set_amount, number_of_trials))
     #
-    # second_obj = SecondTest(prob, number_of_trials)
-    # second_obj.second_model(set_amount)
-    # second_obj.histogram('Histogram rozkładu zmiennej losowej, Sekwencja {} elementow, {} prob'.format(set_amount, number_of_trials))
+    second_obj = SecondTest(prob, number_of_trials)
+    second_obj.second_model(set_amount)
+    second_obj.histogram('Histogram rozkładu zmiennej losowej, Sekwencja {} elementow, {} prob'.format(set_amount, number_of_trials))
